@@ -209,6 +209,14 @@ function ProductList() {
             ]
         }
     ];
+    const [addedToCart, setAddedToCart] = useState({});
+    const handleAddToCart =(plantinfo)=>{
+        dispatch(addItem(plantinfo));
+        setAddedToCart((prevState) => ({
+            ...prevState,
+            [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
+          }));
+    }
    const styleObj={
     backgroundColor: '#4CAF50',
     color: '#fff!important',
@@ -243,6 +251,23 @@ function ProductList() {
                     </a>
                 </div>
               
+            </div>
+            <div className="product-grid">
+            {plantsArray.map((category, index) => (
+  <div key={index}>
+    <h1><div>{category.category}</div></h1>
+    <div className="product-list">
+      {category.plants.map((plant, plantIndex) => (
+        <div className="product-card" key={plantIndex}>
+          <img className="product-image" src={plant.image} alt={plant.name} />
+         <div className="product-title">{plant.name}</div>
+/*Similarly like the above plant.name show other details like description and cost*/
+         <button  onClick={() => handleAddToCart(plant)}>Add to Cart</button>
+        </div>
+      ))}
+    </div>
+  </div>
+))}
             </div>
             <div style={styleObjUl}>
                 <div> <a href="#" style={styleA}>Plants</a></div>
